@@ -34,7 +34,7 @@ const Shop = () => {
         // step 5: set the cart
         setCart(savedCart);
     }, [products])
-
+    // console.log('products length ', products.length);
     const handleAddToCart = (product) => {
         // cart.push(product); '
         let newCart = [];
