@@ -11,10 +11,14 @@ import './Shop.css';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  // const [cart, setCart] = useState([]);
+  const cart = useLoaderData();
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemPerPage] = useState(10);
-  const { count } = useLoaderData();
+  // const { count } = useLoaderData();
+  const count = 76;
+
+
   //   console.log(count);
   //   const itemsPerPage = 10;
   const numberOfPages = Math.ceil(count / itemsPerPage);
@@ -31,28 +35,29 @@ const Shop = () => {
     )
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, [currentPage,itemsPerPage]);
+  }, [currentPage, itemsPerPage]);
 
-  useEffect(() => {
-    const storedCart = getShoppingCart();
-    const savedCart = [];
-    // step 1: get id of the addedProduct
-    for (const id in storedCart) {
-      // step 2: get product from products state by using id
-      const addedProduct = products.find((product) => product._id === id);
-      if (addedProduct) {
-        // step 3: add quantity
-        const quantity = storedCart[id];
-        addedProduct.quantity = quantity;
-        // step 4: add the added product to the saved cart
-        savedCart.push(addedProduct);
-      }
-      // console.log('added Product', addedProduct)
-    }
-    // step 5: set the cart
-    setCart(savedCart);
-  }, [products]);
+  // useEffect(() => {
+  //   const storedCart = getShoppingCart();
+  //   const savedCart = [];
+  //   // step 1: get id of the addedProduct
+  //   for (const id in storedCart) {
+  //     // step 2: get product from products state by using id
+  //     const addedProduct = products.find((product) => product._id === id);
+  //     if (addedProduct) {
+  //       // step 3: add quantity
+  //       const quantity = storedCart[id];
+  //       addedProduct.quantity = quantity;
+  //       // step 4: add the added product to the saved cart
+  //       savedCart.push(addedProduct);
+  //     }
+  //     // console.log('added Product', addedProduct)
+  //   }
+  //   // step 5: set the cart
+  //   setCart(savedCart);
+  // }, [products]);
   // console.log('products length ', products.length);
+
   const handleAddToCart = (product) => {
     // cart.push(product); '
     let newCart = [];
@@ -119,7 +124,7 @@ const Shop = () => {
         <button onClick={handlePrivPage}>prev</button>
         {pages.map((page) => (
           <button
-            className={currentPage === page && 'selected'}
+            className={currentPage === page ? 'selected' : undefined}
             onClick={() => setCurrentPage(page)}
             key={page}
           >
